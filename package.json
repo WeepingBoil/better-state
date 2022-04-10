@@ -1,6 +1,6 @@
 {
 	"name": "better-state",
-	"version": "1.0.56",
+	"version": "1.0.57",
 	"description": "A small wrapper that encapsulates history.pushState and window.onpopstate and offers extra features - including 'No Going Back'",
 	"main": "app.js",
 	"scripts": {
@@ -16,9 +16,5 @@
 		"pushState",
 		"onpopstate"
 	],
-	"license": "Help yourself",
-	"dependencies": {
-		"EventEmitter": "^1.0.0",
-		"node": "^17.7.2"
-	}
+	"license": "Help yourself"
 }
