@@ -117,7 +117,7 @@ class App extends EventEmitter {
 				data: data
 			}
 		};
-		history.pushState(this.#history[this.#index], "", `${url}_(${this.#index})`);
+		history.pushState(this.#history[this.#index], "", url);
 		return this.state;
 	};
 }
