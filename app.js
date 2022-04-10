@@ -4,8 +4,8 @@ class App extends EventEmitter {
 	#index = 0;
 	#prevented = false;
 	#history = [];
-	preventBack = false;
-	preventForward = false;
+	#preventBack = 0;
+	#preventForward = 0;
 	#override = false;
 
 	constructor() {
@@ -31,12 +31,12 @@ class App extends EventEmitter {
 			else if (e.state.index < this.#index) _back = true;
 			else if (e.state.index >= this.#index) _back = false;
 			this.#index = e.state?.index ?? 0;
-			if (_back && this.preventBack && this.#override === false) {
+			if (_back && this.preventBack > 0 && this.#override === false) {
 				this.#prevented = "back";
 				this.forceForward(1);
 				return;
 			}
-			if (!_back && this.preventForward && this.#override === false) {
+			if (!_back && this.preventForward > 0 && this.#override === false) {
 				this.#prevented = "forward";
 				this.forceBack(1);
 				return;
@@ -52,6 +52,32 @@ class App extends EventEmitter {
 			this.#override = false;
 		};
 		console.log(this.#index);
+	}
+
+	get preventBack() {
+		return this.#preventBack > 0;
+	}
+
+	set preventBack(v) {
+		if (v) this.#preventBack++;
+		else this.#preventBack--;
+	}
+
+	resetPreventBack() {
+		this.#preventBack = 0;
+	}
+
+	get preventForward() {
+		return this.#preventForward > 0;
+	}
+
+	set preventForward(v) {
+		if (v) this.#preventForward++;
+		else this.#preventForward--;
+	}
+
+	resetPreventForward() {
+		this.#preventForward = 0;
 	}
 
 	get history() {

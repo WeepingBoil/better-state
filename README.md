@@ -64,6 +64,8 @@ To prevent the use of the browser's back and forward buttons:
 
 `betterState.preventForward = true`
 
+NB - effects of this settings are stacked and cumulative. ie **two** calls to `betterState.preventBack = true` will require two calls to `betterState.preventBack = false` to take affect. Use `betterState.resetPreventBack()` and `betterState.resetPreventForward()` to negate previous calls.
+
 
 ---
 
