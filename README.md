@@ -34,7 +34,7 @@ This is a small wrapper that encapsulates
 
 ## Known Issues
 
-Preventing the browser back button is a bit of a hack - a definitely not supported by most modern browsers.
+Preventing the browser back button is a bit of a hack - and definitely not supported by most modern browsers.
 
 Please test thoroughly before using in a production environment.
 
@@ -82,14 +82,14 @@ To subscribe to popstate events (i.e. back and forward button clicks...)
 
 returns:
 - back: [ *true | false* ] if the back button was pressed.
-- forward: [ *true | false* ] if the back button was pressed.
+- forward: [ *true | false* ] if the forward button was pressed.
 - prevented: [ *true | false* ] if the pop was prevented.
 - forced: [ *true | false* ] if the pop was forced[^2]
-- state: {_Object_} including:
+- state: { _Object_ } including:
   - url
   - scrollX
   - scrollY
-  - data: {_Object_} any consumer data
+  - data: { _Object_ } any consumer data
 
 
 ---
