@@ -21,9 +21,11 @@ class App extends EventEmitter {
 			}
 		};
 		window.onscroll = () => {
-			this.#history[this.#index].state.scrollX = window.scrollX;
-			this.#history[this.#index].state.scrollY = window.scrollY;
-			history.replaceState(this.#history[this.#index], "", this.#history[this.#index].state.url);
+			try {
+				this.#history[this.#index].state.scrollX = window.scrollX;
+				this.#history[this.#index].state.scrollY = window.scrollY;
+				history.replaceState(this.#history[this.#index], "", this.#history[this.#index].state.url);
+			} catch {}
 		};
 		window.onpopstate = (e) => {
 			var _back = false;
