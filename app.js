@@ -27,7 +27,7 @@ class App extends EventEmitter {
 				history.replaceState(this.#history[this.#index], "", this.#history[this.#index].state.url);
 			} catch {}
 		};
-		window.onpopstate = (e) => {
+		window.addEventListener("popstate", (e) => {
 			var _back = false;
 			if (!e.state?.index) _back = true;
 			else if (e.state.index < this.#index) _back = true;
@@ -43,7 +43,7 @@ class App extends EventEmitter {
 				this.forceBack(1);
 				return;
 			}
-			this.emit("state-change", {
+			this.emit("better-state-change", {
 				back: this.#prevented === "back" || (this.#prevented !== "forward" && _back === true),
 				forward: this.#prevented === "forward" || (this.#prevented !== "back" && _back === false),
 				prevented: this.#prevented !== false,
@@ -52,8 +52,7 @@ class App extends EventEmitter {
 			});
 			this.#prevented = false;
 			this.#override = false;
-		};
-		console.log(this.#index);
+		});
 	}
 
 	get preventBack() {
