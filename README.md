@@ -80,7 +80,7 @@ To get the current known history[^1]:
 
 To subscribe to popstate events (i.e. back and forward button clicks...)
 
-`betterState.on = (e) => { console.log(e); };`
+`betterState.onPopState = (e) => { console.log(e); };`
 
 returns:
 - back: [ *true | false* ] if the back button was pressed.
