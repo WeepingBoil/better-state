@@ -1,8 +1,8 @@
 {
 	"name": "better-state",
-	"version": "1.0.63",
+	"version": "1.1.1",
 	"description": "A small wrapper that encapsulates history.pushState and window.onpopstate and offers extra features - including 'No Going Back'",
-	"main": "app.js",
+	"main": "better-state.min.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},

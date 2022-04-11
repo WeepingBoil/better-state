@@ -1,6 +1,4 @@
-import EventEmitter from "events";
-
-class App extends EventEmitter {
+class App {
 	#index = 0;
 	#prevented = false;
 	#history = [];
@@ -9,7 +7,6 @@ class App extends EventEmitter {
 	#override = false;
 
 	constructor() {
-		super();
 		this.#index = isNaN(history.state?.index) ? 0 : history.state.index;
 		this.#history[this.#index] = history.state || {
 			index: this.#index,
@@ -43,16 +40,27 @@ class App extends EventEmitter {
 				this.forceBack(1);
 				return;
 			}
-			this.emit("better-state-change", {
-				back: this.#prevented === "back" || (this.#prevented !== "forward" && _back === true),
-				forward: this.#prevented === "forward" || (this.#prevented !== "back" && _back === false),
-				prevented: this.#prevented !== false,
-				forced: this.#override === true,
-				state: e.state?.state ?? {}
-			});
+
+			window.dispatchEvent(
+				new CustomEvent("__better-state-pop-state", {
+					detail: {
+						back: this.#prevented === "back" || (this.#prevented !== "forward" && _back === true),
+						forward: this.#prevented === "forward" || (this.#prevented !== "back" && _back === false),
+						prevented: this.#prevented !== false,
+						forced: this.#override === true,
+						state: e.state?.state ?? {}
+					}
+				})
+			);
+
 			this.#prevented = false;
 			this.#override = false;
 		});
+		try {
+			window.removeEventListener("__better-state-pop-state", this.pop);
+		} catch {}
+
+		window.addEventListener("__better-state-pop-state", this.pop);
 	}
 
 	get preventBack() {
@@ -104,6 +112,16 @@ class App extends EventEmitter {
 		this.#history[this.#index].state.data = data;
 		history.replaceState(this.#history[this.#index], "", this.#history[this.#index].state.url);
 		return this.state;
+	};
+
+	pop = (data) => {
+		this.onPopState(data.detail);
+	};
+
+	onPopState = false;
+
+	offPopState = () => {
+		this.onPopState = false;
 	};
 
 	pushState = (url, data) => {
