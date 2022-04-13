@@ -11,7 +11,7 @@ class App {
 	verbose = false;
 
 	constructor() {
-		if (this.verbose) console.log("better-state");
+		console.log("better-state 1.1.6");
 		this.#index = isNaN(history.state?.index) ? 0 : history.state.index;
 		this.#history[this.#index] = history.state || {
 			index: this.#index,
@@ -113,11 +113,14 @@ class App {
 	};
 
 	replaceState = (url, data) => {
-		this.#history[this.#index].state.url = url;
-		if (data) this.#history[this.#index].state.data = data;
+		var _url = typeof url == "string" ? url : typeof data == "string" ? data : false;
+		var _data = typeof url == "object" ? url : typeof data == "object" ? data : false;
+		if (_url) this.#history[this.#index].state.url = _url;
+		if (_data) this.#history[this.#index].state.data = _data;
 		if (this.verbose) console.log("better-state-replace", this.#history[this.#index], url);
 
-		history.replaceState(this.#history[this.#index], "", url);
+		if (!_url) history.replaceState(this.#history[this.#index]);
+		else history.replaceState(this.#history[this.#index], "", _url);
 		return this.state;
 	};
 
